@@ -1,4 +1,4 @@
-# three_init
+# three-init
 
 ## Project setup
 ```
