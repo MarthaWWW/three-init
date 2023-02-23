@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementPlus from 'element-plus'
+import 'element-plus/theme-chalk/index.css'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 
-createApp(App).use(store).use(router).mount('#app').use(ElementUI)
+createApp(App).use(store).use(router).use(ElementPlus, { locale }).mount('#app')

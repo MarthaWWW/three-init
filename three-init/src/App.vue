@@ -2,6 +2,9 @@
 <router-view></router-view>
 </template>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+body{
+  padding: 0;
+  margin: 0;
+}
 </style>

@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Cube from '../views/001-cube.vue'
+import Cube from '../views/examples/aExp001.vue'
 import HomeList from '../views/HomeList.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeList
-  },
-  {
-    path: '/001-cube',
-    name: 'cube',
-    component: Cube
+    component: HomeList,
+    children: [
+      {
+        path: '/001',
+        name: '001',
+        component: Cube
+      }
+    ]
   }
 
 ]
