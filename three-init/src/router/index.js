@@ -8,12 +8,12 @@ import PerspectiveGlobalPicture from '../views/examples/aExp006.vue'
 import ZoomGlobalPicture from '../views/examples/aExp007.vue'
 import GlobalVideo from '../views/examples/aExp008.vue'
 import Stars from '../views/examples/aExp009.vue'
+import SkyBox from '../views/examples/aExp010.vue'
+import OneToSix from '../views/examples/aExp011.vue'
+import Move from '../views/examples/aExp012.vue'
+import Scale from '../views/examples/aExp013.vue'
+import Rotate from '../views/examples/aExp014.vue'
 /*
-import Cube from '../views/examples/aExp010.vue'
-import Cube from '../views/examples/aExp011.vue'
-import Cube from '../views/examples/aExp012.vue'
-import Cube from '../views/examples/aExp013.vue'
-import Cube from '../views/examples/aExp014.vue'
 import Cube from '../views/examples/aExp015.vue'
 import Cube from '../views/examples/aExp016.vue'
 import Cube from '../views/examples/aExp017.vue'
@@ -157,27 +157,27 @@ const routes = [
       {
         path: '/010',
         name: '010',
-        component: Cube
+        component: SkyBox
       },
       {
         path: '/011',
         name: '011',
-        component: Cube
+        component: OneToSix
       },
       {
         path: '/012',
         name: '012',
-        component: Cube
+        component: Move
       },
       {
         path: '/013',
         name: '013',
-        component: Cube
+        component: Scale
       },
       {
         path: '/014',
         name: '014',
-        component: Cube
+        component: Rotate
       },
       {
         path: '/015',

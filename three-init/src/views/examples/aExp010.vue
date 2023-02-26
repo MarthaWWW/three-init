@@ -2,38 +2,53 @@
  * @Description：使用六幅图像的天空盒设置背景
 -->
 <template>
-  <center id = "myContainer"></center>
+<center id = "myContainer"></center>
 </template>
 
 <script>
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+let myRenderer, myCamera, myScene, myOrbitControls, myCubeLoader, myImages, myAxesHelper,
+  myGeometry, myLoader, myMap, myMaterial
+let urls = [require('../../../public/images/img081right.jpg'), require('../../../public/images/img082left.jpg'),
+  require('../../../public/images/img083top.jpg'), require('../../../public/images/img084bottom.jpg'), require('../../../public/images/img085front.jpg'), require('../../../public/images/img086back.jpg')]
+let url = require('../../../public/images/img002.jpg')
+
 export default {
   methods:
 {
   Init () {
-    // 创建渲染器
-    const myWidth = 480; const myHeight = 320
-    const myRenderer = new THREE.WebGLRenderer({ antialias: true })
-    myRenderer.setSize(myWidth, myHeight)
-    myRenderer.setClearColor('white', 1)
+    myRenderer = new THREE.WebGLRenderer({ antialias: true })
+    myRenderer.setPixelRatio(window.devicePixelRatio)
+    myRenderer.setSize(712, 400)
+    myRenderer.setClearColor(0xeeeeee)
     document.getElementById('myContainer')?.appendChild(myRenderer.domElement)
-    const myScene = new THREE.Scene()
-    const k = myWidth / myHeight; const s = 120
-    const myCamera = new THREE.OrthographicCamera(-s * k,
-      s * k, s, -s, 1, 1000)
-    myCamera.position.set(400, 300, 200)
-    myCamera.lookAt(myScene.position)
-    // 创建立方体
-    const myGeometry = new THREE.BoxGeometry(100, 100, 100)
-    const myMaterial = new THREE.MeshNormalMaterial()
-    const myMesh = new THREE.Mesh(myGeometry, myMaterial)
-    myScene.add(myMesh)
-    // 使用定时器实现间隔渲染立方体
-    setInterval(function () {
-      myMesh.rotateX(0.01) // 按照指定的弧度围绕x轴旋转网格(立方体)
-      myRenderer.render(myScene, myCamera)
-    }, 120)
+    myCamera = new THREE.PerspectiveCamera(45,
+      window.innerWidth / window.innerHeight, 0.1, 1000)
+    myCamera.position.set(10, 10, 15)
+    myOrbitControls = new OrbitControls(myCamera, myRenderer.domElement)
+    myCubeLoader = new THREE.CubeTextureLoader()
+    // 六幅图像分别是朝前posz、朝后negz、朝上posy、朝下negy、朝右posx和朝左negx
+    myImages = myCubeLoader.load(urls)
+    myScene = new THREE.Scene()
+    myScene.background = myImages
+    // 绘制三维坐标轴
+    myAxesHelper = new THREE.AxesHelper(50)
+    myScene.add(myAxesHelper)
+    // 添加立方体
+    myGeometry = new THREE.BoxGeometry(4, 4, 4)
+    myLoader = new THREE.TextureLoader()
+    myMap = myLoader.load(url)
+    myMaterial = new THREE.MeshBasicMaterial({ map: myMap })
+    myScene.add(new THREE.Mesh(myGeometry, myMaterial))
+    this.animate()
+  },
+  animate () {
+    myOrbitControls.update()
+    myRenderer.render(myScene, myCamera)
+    requestAnimationFrame(this.animate)
   }
+
 },
   mounted () {
     this.Init()

@@ -1,38 +1,49 @@
 <!--
  * @Description：使用透视照相机滚动浏览全景图
+ 不清楚
+
 -->
 <template>
-  <center id = "myContainer"></center>
+  <div id="myContainer"></div>
 </template>
 
 <script>
 import * as THREE from 'three'
+let myCamera, myScene, myRenderer, myTexture
+let lon = 0; let lat = 0; let phi = 0; let theta = 0
+const myTextureLoader = new THREE.TextureLoader()
+const url = require('../../../public/images/img050.jpg')
+
 export default {
-  methods:
-{
-  Init () {
-    const myRenderer = new THREE.WebGLRenderer() // 创建渲染器
-    const myWidth = 480 // 设置窗口宽度
-    const myHeight = 320 // 设置窗口高度
-    myRenderer.setSize(myWidth, myHeight) // 设置渲染区域
-    myRenderer.setClearColor('white', 1) // 设置清空颜色
-    document.getElementById('myContainer')?.appendChild(myRenderer.domElement)
-    const myScene = new THREE.Scene() // 创建场景
-    const myLight = new THREE.PointLight('red') // 创建红色光源
-    myLight.position.set(400, 800, 300) // 设置光源位置
-    myScene.add(myLight) // 在场景中添加光源
-    const k = myWidth / myHeight // 计算窗口宽高比
-    const s = 120 // 三维场景显示范围控制系数
-    const myCamera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000) // 创建相机
-    myCamera.position.set(400, 300, 200) // 设置相机位置
-    myCamera.lookAt(myScene.position) // 设置相机观察的目标点
-    const myGeometry = new THREE.BoxGeometry(100, 100, 100) // 创建立方体
-    const myMaterial = new THREE.MeshLambertMaterial({ color: 0xFFBF00 }) // 创建材质
-    const myMesh = new THREE.Mesh(myGeometry, myMaterial) // 依据之前创建的立方体和材质创建网格
-    myScene.add(myMesh)
-    myRenderer.render(myScene, myCamera)
-  }
-},
+  methods: {
+    animate () {
+      requestAnimationFrame(this.animate)
+      lon += 0.15// 设置在经度方向的增量
+      lat = Math.max(-85, Math.min(85, lat))
+      phi = THREE.MathUtils.degToRad(90 - lat)
+      theta = THREE.MathUtils.degToRad(lon)
+      myCamera.position.x = 100 * Math.sin(phi) * Math.cos(theta)
+      myCamera.position.y = 100 * Math.cos(phi)
+      myCamera.position.z = 100 * Math.sin(phi) * Math.sin(theta)
+      myCamera.lookAt(myScene.position)
+      myRenderer.render(myScene, myCamera)
+    },
+    Init () {
+      myRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+      myRenderer.setSize(712, 400)
+      document.getElementById('myContainer')?.append(myRenderer.domElement)
+      myCamera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 1, 1000)
+      myScene = new THREE.Scene()
+      // 使用全景图设置场景背景
+      myTexture = myTextureLoader.load(url, () => {
+        const rt = new THREE.WebGLCubeRenderTarget(400)
+        rt.fromEquirectangularTexture(myRenderer, myTexture)
+        myScene.background = rt.myTexture
+      })
+      myScene.background = new THREE.WebGLCubeRenderTarget(400).fromEquirectangularTexture(myRenderer, myTexture)
+      this.animate()
+    }
+  },
   mounted () {
     this.Init()
   }
@@ -46,3 +57,9 @@ export default {
 }
 </style>
 
+<style lang="scss" scoped>
+#myContainer {
+  margin:0;
+  padding:0;
+}
+</style>

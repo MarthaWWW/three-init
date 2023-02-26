@@ -26,7 +26,7 @@ export default {
   Init () {
     // 创建渲染器
     myRenderer = new THREE.WebGLRenderer()
-    myRenderer.setSize(712,400)
+    myRenderer.setSize(712, 400)
     document.getElementById('myContainer')?.appendChild(myRenderer.domElement)
     myCamera = new THREE.PerspectiveCamera(75,
       window.innerWidth / window.innerHeight, 1, 1100)

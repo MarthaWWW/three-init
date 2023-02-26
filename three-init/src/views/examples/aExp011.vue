@@ -1,6 +1,6 @@
 <!--
- * @Description: 在场景中自定义光源绘制立方体
-    创建渲染器——指定渲染器何处呈现——创建场景——创建光源——创建相机——创建立方体——创建材质——创建网格——开始渲染
+ * @Description: 使用一个图像文件创建天空盒
+ 将一个图像文件拆分成6个
 -->
 <template>
   <center id = "myContainer"></center>
@@ -8,30 +8,61 @@
 
 <script>
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+let myRenderer, myCamera, myScene, myOrbitControls, myImage, myCanvas, myContext, myMesh
+let myMaterials = []
+let myTextures = []
+const url = require('../../../public/images/img120.jpg')
 export default {
   methods:
 {
-  Init () {
-    const myRenderer = new THREE.WebGLRenderer() // 创建渲染器
-    const myWidth = 480 // 设置窗口宽度
-    const myHeight = 320 // 设置窗口高度
-    myRenderer.setSize(myWidth, myHeight) // 设置渲染区域
-    myRenderer.setClearColor('white', 1) // 设置清空颜色
-    document.getElementById('myContainer')?.appendChild(myRenderer.domElement)
-    const myScene = new THREE.Scene() // 创建场景
-    const myLight = new THREE.PointLight('red') // 创建红色光源
-    myLight.position.set(400, 800, 300) // 设置光源位置
-    myScene.add(myLight) // 在场景中添加光源
-    const k = myWidth / myHeight // 计算窗口宽高比
-    const s = 120 // 三维场景显示范围控制系数
-    const myCamera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000) // 创建相机
-    myCamera.position.set(400, 300, 200) // 设置相机位置
-    myCamera.lookAt(myScene.position) // 设置相机观察的目标点
-    const myGeometry = new THREE.BoxGeometry(100, 100, 100) // 创建立方体
-    const myMaterial = new THREE.MeshLambertMaterial({ color: 0xFFBF00 }) // 创建材质
-    const myMesh = new THREE.Mesh(myGeometry, myMaterial) // 依据之前创建的立方体和材质创建网格
-    myScene.add(myMesh)
+  animate () {
+    requestAnimationFrame(this.animate)
     myRenderer.render(myScene, myCamera)
+  },
+  Init () {
+    // 创建渲染器
+    myRenderer = new THREE.WebGLRenderer({ antialias: true })
+    myRenderer.setPixelRatio(window.devicePixelRatio)
+    myRenderer.setSize(712, 400)
+    document.getElementById('myContainer')?.append(myRenderer.domElement)
+    myScene = new THREE.Scene()
+    myCamera = new THREE.PerspectiveCamera(90,
+      window.innerWidth / window.innerHeight, 0.1, 1000)
+    myCamera.position.z = 0.001
+    myOrbitControls = new OrbitControls(myCamera,myRenderer.domElement) // eslint-disable-line no-unused-vars
+    // 创建空白的6个贴图
+    myTextures = []
+    for (let i = 0; i < 6; i++) { myTextures[i] = new THREE.Texture() }
+    myImage = new Image()
+    // img120.jpg文件在水平方向上包含六幅图像，可以在看图工具中仔细查看
+    myImage.src = url
+    myImage.onload = function () {
+      for (let i = 0; i < myTextures.length; i++) {
+        myCanvas = document.createElement('canvas')
+        myContext = myCanvas.getContext('2d')
+        myCanvas.height = myImage.height
+        myCanvas.width = myImage.height
+        // 从img120.jpg中取出第i幅图像
+        myContext.drawImage(myImage, myImage.height * i, 0, myImage.height,
+          myImage.height, 0, 0, myImage.height, myImage.height)
+        myTextures[i].image = myCanvas
+        myTextures[i].needsUpdate = true
+      }
+    }
+    // 使用6幅贴图创建天空盒材质
+    myMaterials = []
+    for (let i = 0; i < 6; i++) {
+      myMaterials.push(new THREE.MeshBasicMaterial({ map: myTextures[i] }))
+    }
+    // 使用6幅贴图创建天空盒
+    myMesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), myMaterials)
+    // 可以使用myMesh.geometry.scale(1,1,-1)或myMesh.geometry.scale(1,1,-1)
+    // 即六幅图像在立方体的里面，而不是外面（myMesh.geometry.scale(1,1,1);）
+    myMesh.geometry.scale(1, 1, -1)
+    myScene.add(myMesh)
+    // 渲染天空盒
+    this.animate()
   }
 },
   mounted () {
