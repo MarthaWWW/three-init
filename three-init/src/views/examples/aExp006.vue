@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import * as THREE from 'three'
+import * as THREE from '../../../public/ThreeJS/three.js'
 let myCamera, myScene, myRenderer, myTexture
 let lon = 0; let lat = 0; let phi = 0; let theta = 0
 const myTextureLoader = new THREE.TextureLoader()

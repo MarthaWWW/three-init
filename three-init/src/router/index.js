@@ -10,23 +10,32 @@ import GlobalVideo from '../views/examples/aExp008.vue'
 import Stars from '../views/examples/aExp009.vue'
 import SkyBox from '../views/examples/aExp010.vue'
 import OneToSix from '../views/examples/aExp011.vue'
+// TransformControls
 import Move from '../views/examples/aExp012.vue'
 import Scale from '../views/examples/aExp013.vue'
 import Rotate from '../views/examples/aExp014.vue'
+// DragControls
+import Drag from '../views/examples/aExp015.vue'
+// OrbitControls
+import Zoom from '../views/examples/aExp016.vue'
+import RotateCamera from '../views/examples/aExp017.vue'
+// RayCaster
+import MouseChoose from '../views/examples/aExp018.vue'
+import ClickChangeColor from '../views/examples/aExp019.vue'
+// fog
+import FogLinear from '../views/examples/aExp020.vue'
+import FogMulti from '../views/examples/aExp021.vue'
+import FogExp from '../views/examples/aExp022.vue'
+// ArrowHelper
+import ArrowHelper from '../views/examples/aExp023.vue'
+// AxesHelper
+import AxesHelper from '../views/examples/aExp024.vue'
+// CSS3DRenderer
+import GlobalRender from '../views/examples/aExp025.vue'
+import ObjectRender from '../views/examples/aExp026.vue'
+// SVGRenderer
+import LineRender from '../views/examples/aExp027.vue'
 /*
-import Cube from '../views/examples/aExp015.vue'
-import Cube from '../views/examples/aExp016.vue'
-import Cube from '../views/examples/aExp017.vue'
-import Cube from '../views/examples/aExp018.vue'
-import Cube from '../views/examples/aExp019.vue'
-import Cube from '../views/examples/aExp020.vue'
-import Cube from '../views/examples/aExp021.vue'
-import Cube from '../views/examples/aExp022.vue'
-import Cube from '../views/examples/aExp023.vue'
-import Cube from '../views/examples/aExp024.vue'
-import Cube from '../views/examples/aExp025.vue'
-import Cube from '../views/examples/aExp026.vue'
-import Cube from '../views/examples/aExp027.vue'
 import Cube from '../views/examples/aExp028.vue'
 import Cube from '../views/examples/aExp029.vue'
 import Cube from '../views/examples/aExp030.vue'
@@ -110,7 +119,7 @@ const routes = [
     component: HomeList,
     children: [
       {
-        path: '/001',
+        path: '/',
         name: '001',
         component: Cube
       },
@@ -182,33 +191,84 @@ const routes = [
       {
         path: '/015',
         name: '015',
-        component: Cube
+        component: Drag
       },
       {
         path: '/016',
         name: '016',
-        component: Cube
+        component: Zoom
       },
       {
         path: '/017',
         name: '017',
-        component: Cube
+        component: RotateCamera
       },
       {
         path: '/018',
         name: '018',
-        component: Cube
+        component: MouseChoose
       },
       {
         path: '/019',
         name: '019',
-        component: Cube
+        component: ClickChangeColor
       },
       {
         path: '/020',
         name: '020',
+        component: FogLinear
+      },
+      {
+        path: '/021',
+        name: '021',
+        component: FogMulti
+      },
+      {
+        path: '/022',
+        name: '022',
+        component: FogExp
+      },
+      {
+        path: '/023',
+        name: '023',
+        component: ArrowHelper
+      },
+      {
+        path: '/024',
+        name: '024',
+        component: AxesHelper
+      },
+      {
+        path: '/025',
+        name: '025',
+        component: GlobalRender
+      },
+      {
+        path: '/026',
+        name: '026',
+        component: ObjectRender
+      },
+      {
+        path: '/027',
+        name: '027',
+        component: LineRender
+      },
+      {
+        path: '/028',
+        name: '028',
+        component: Cube
+      },
+      {
+        path: '/029',
+        name: '029',
+        component: Cube
+      },
+      {
+        path: '/030',
+        name: '030',
         component: Cube
       }
+    
     ]
   }
 

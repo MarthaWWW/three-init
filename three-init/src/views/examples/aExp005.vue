@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import * as THREE from 'three'
+import * as THREE from '../../../public/ThreeJS/three.js'
 let myCamera, myScene, myRenderer, mySphereMesh, myAspect, myPerspectiveCamera, myPerspectiveCameraHelper
 export default {
   methods: {

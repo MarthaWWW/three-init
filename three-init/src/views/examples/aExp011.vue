@@ -9,7 +9,7 @@
 <script>
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-let myRenderer, myCamera, myScene, myOrbitControls, myImage, myCanvas, myContext, myMesh
+let myRenderer, myCamera, myScene, myMouse, myOrbitControls, myImage, myCanvas, myContext, myMesh
 let myMaterials = []
 let myTextures = []
 const url = require('../../../public/images/img120.jpg')
