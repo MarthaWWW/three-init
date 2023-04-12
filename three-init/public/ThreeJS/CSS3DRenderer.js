@@ -2,7 +2,6 @@ console.warn( "THREE.CSS3DRenderer: As part of the transition to ES6 Modules, th
 /**
  * Based on http://www.emagix.net/academic/mscs-project/item/camera-sync-with-css3-and-webgl-threejs
  */
-
 THREE.CSS3DObject = function ( element ) {
 
 	THREE.Object3D.call( this );

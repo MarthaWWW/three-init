@@ -1,5 +1,5 @@
 <!--
- * @Description: 使用OrbitControls旋转照相机
+ * @Description: 使用图像设置立方体的各个表面
 -->
 <template>
     <center id = "myContainer"></center>

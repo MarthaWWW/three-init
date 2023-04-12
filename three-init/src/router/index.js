@@ -31,7 +31,7 @@ import ArrowHelper from '../views/examples/aExp023.vue'
 // AxesHelper
 import AxesHelper from '../views/examples/aExp024.vue'
 // CSS3DRenderer
-import GlobalRender from '../views/examples/aExp025.vue'
+import CSS3DRenderer from '../views/examples/aExp025.vue'
 import ObjectRender from '../views/examples/aExp026.vue'
 // SVGRenderer
 import LineRender from '../views/examples/aExp027.vue'
@@ -241,7 +241,7 @@ const routes = [
       {
         path: '/025',
         name: '025',
-        component: GlobalRender
+        component: CSS3DRenderer
       },
       {
         path: '/026',

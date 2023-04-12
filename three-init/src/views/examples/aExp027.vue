@@ -1,5 +1,6 @@
 <!--
  * @Description: 使用SVGRenderer渲染线条宽度
+    实现根据在材质中指定的宽度绘制线条
 -->
 <template>
     <center id = "myContainer"></center>
